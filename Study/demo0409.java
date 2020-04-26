@@ -1,4 +1,4 @@
-package basic.JavaStudy.src.basic;
+package JavaStudy.Study;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package basic.JavaStudy.src.basic;
+package JavaStudy.Study;
 
 public class Study0409 {
     public static void main(String[] args) {

@@ -1,4 +1,5 @@
-package Study;
+package JavaStudy.Study;
+
 
 /**
  * Program: Java
