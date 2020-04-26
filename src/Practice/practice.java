@@ -1,4 +1,4 @@
-package Practice;
+package JavaStudy.Practice;
 
 /**
  * @program: Java

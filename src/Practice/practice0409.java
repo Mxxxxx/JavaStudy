@@ -1,4 +1,5 @@
-package Practice;
+package JavaStudy.Practice;
+
 
 //public class practice0409 {
 //    public static void main(String[] args) {

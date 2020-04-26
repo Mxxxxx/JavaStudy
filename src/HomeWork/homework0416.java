@@ -1,4 +1,5 @@
-package HomeWork;
+package JavaStudy.HomeWork;
+
 
 import java.util.Arrays;
 

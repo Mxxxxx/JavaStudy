@@ -111,7 +111,7 @@ public class MyArrayList {
         this.usedSize--;
     }
 
-    //清楚
+    //清除
     public void clear() {
         this.elem = new int[intCapity];
         this.usedSize = 0;

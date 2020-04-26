@@ -1,4 +1,5 @@
-package Practice;
+package JavaStudy.Practice;
+
 
 import java.util.Scanner;
 
