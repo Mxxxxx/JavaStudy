@@ -329,10 +329,10 @@ public class MyLinkList0421 {
         Node fast = this.head;
         Node slow = this.head;
         Node head = this.head;
-        if (this.head == null) {
+        if (this.head == null) { //链表为空情况
             return false;
         }
-        if (this.head.next == null) {
+        if (this.head.next == null) { //只有一个节点情况
             System.out.println("只有头节点自己");
             return true;
         }
