@@ -4,6 +4,7 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * @program: Java
@@ -239,13 +240,17 @@ public class Study0507 {
     //2.String拼接会被优化为StringBuild的append()方法
     //3.StringBuild String 一般用于单线程
     //4.StringBuffer一般用于多线程
-    public static void main(String[] args) {
+    public static void main52(String[] args) {
         StringBuffer stringBuffer = new StringBuffer();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("abcd");
         stringBuilder.append("efg");
         stringBuilder.reverse();
         System.out.println(stringBuilder.toString());
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
     }
 }
 
