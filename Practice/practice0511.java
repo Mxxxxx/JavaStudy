@@ -1,6 +1,8 @@
 package JavaStudy.Practice;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @program: Java
@@ -95,5 +97,32 @@ public class practice0511 {
         //System.out.println(str.indexOf("e"));
         //System.out.println(str.contains("World"));
         System.out.println(str.compareTo("ABc"));
+    }
+
+
+    //给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> ret = new ArrayList<>();
+        if (numRows == 0) {
+            return ret;
+        }
+        ret.add(new ArrayList<>());//第一行
+        ret.get(0).add(1);//第一行直接添加1
+        for (int i = 1; i < numRows; i++) {
+            //直接从第二行计算
+            List<Integer> curRow = new ArrayList<>();
+            curRow.add(1);//当前行的第一个元素
+            List<Integer> prevRow = ret.get(i - 1);//前一行
+            for (int j = 1; j < i; j++) {
+                //[i,j] = [i-1,j] + [i-1,j-1]
+                int x = prevRow.get(j);
+                int y = prevRow.get(j - 1);
+                curRow.add(x + y);
+            }
+            //最后一个元素
+            curRow.add(1);
+            ret.add(curRow);
+        }
+        return ret;
     }
 }
