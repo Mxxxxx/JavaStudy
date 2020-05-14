@@ -2,6 +2,7 @@ package JavaStudy.Practice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @program: Java
@@ -76,7 +77,49 @@ public class practice0513 {
             }
         }
         return list;
-
     }
 
+
+    //给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+//
+//有效字符串需满足：
+//
+//左括号必须用相同类型的右括号闭合。
+//左括号必须以正确的顺序闭合。
+//注意空字符串可被认为是有效字符串。
+//
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/valid-parentheses
+//著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public boolean isValid(String s) {
+        //栈来存放左括号
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '(' || ch == '[' || ch == '{') {
+                stack.push(ch);//栈存放左括号
+            } else {
+                //遇到右括号
+                if (stack.empty()) {
+                    System.out.println("右括号多");
+                    return false;
+                }
+
+                char ch2 = stack.peek();//先拿到栈定元素的括号 判断与右括号是否匹配
+                if (ch2 == '(' && ch == ')' || ch2 == '[' && ch == ']' || ch2 == '{' && ch == '}') {
+                    stack.pop();//出栈一个左括号
+                } else {
+                    //第一个就不匹配
+                    System.out.println("左右括号不匹配");
+                    return false;
+                }
+            }
+        }
+        //左括号多到 匹配的取完后还有的情况
+        if (!stack.empty()) {
+            System.out.println("左括号多");
+            return false;
+        }
+        return true;
+    }
 }
