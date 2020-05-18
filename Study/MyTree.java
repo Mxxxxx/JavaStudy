@@ -1,5 +1,7 @@
 package JavaStudy.Study;
 
+import java.util.*;
+
 /**
  * @program: Java
  * @description:
@@ -250,4 +252,187 @@ public class MyTree {
         return false;
     }
 
+
+    //层序遍历
+    public void levelOrderTraversal(NodeTree root) {
+        //利用队列
+        //队列为空，根节点入队列
+        if (root == null) {
+            return;
+        }
+        Queue<NodeTree> queue = new LinkedList<>();
+        queue.offer(root);
+        //不为空，弹出队头元素，并且打印
+        while (!queue.isEmpty()) {
+            NodeTree cur = queue.poll();
+            System.out.print(cur.val);
+            //队列不为空，放左右,先左
+            if (cur.left != null) {
+                levelOrderTraversal(root.left);
+            }
+            if (cur.right != null) {
+                levelOrderTraversal(root.right);
+            }
+        }
+    }
+
+
+    //层序遍历一层的节点
+    public List<List<Character>> levelOrder(NodeTree root) {
+        List<List<Character>> ret = new LinkedList<>();
+        if (root == null) return ret;
+        Queue<NodeTree> queue = new LinkedList<>();//队列，先进先出
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            //1、求当前队列的大小  size
+            int size = queue.size();
+            List<Character> list = new ArrayList<>();
+            //2、while(size > 0)  -->控制当前每一层的数据个数
+            while (size > 0) {//循环每一层的进入列表
+                NodeTree cur = queue.poll();
+                if (cur != null) {
+                    list.add(cur.val);
+                    if (cur.left != null) {
+                        queue.offer(cur.left);
+                    }
+                    if (cur.right != null) {
+                        queue.offer(cur.right);
+                    }
+                }
+                size--;
+            }
+            ret.add(list);
+        }
+        return ret;
+    }
+
+    //判断完全二叉树
+    public boolean isCompleteTree(NodeTree root) {
+        if (root == null) return true;
+        //利用队列存储
+        Queue<NodeTree> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            NodeTree cur = queue.poll();//弹出根节点
+            if (cur != null) {
+                queue.offer(cur.left);//左
+                queue.offer(cur.right);//右
+            } else {
+                break;
+            }
+        }
+        //遇到空  看队列里面是否都是空
+        while (!queue.isEmpty()) {
+            NodeTree cur2 = queue.peek();
+            if (cur2 != null) {
+                return false;
+            } else {
+                queue.poll();//弹出前面的null
+            }
+        }
+        return true;
+    }
+
+
+    // 前序遍历(非递归)
+    void preOrderTraversalNor(NodeTree root) {
+        //利用栈
+        if (root == null) {
+            return;
+        }
+        Stack<NodeTree> stack = new Stack<>();
+        NodeTree cur = root;
+        while (cur != null || !stack.empty()) {
+            while (cur != null) {
+                stack.push(cur);
+                System.out.println(cur.val);
+                cur = cur.left;//左
+            }
+            NodeTree top = stack.pop();
+            cur = top.right;//右
+        }
+    }
+
+    // 中序遍历
+    void inOrderTraversalNor(NodeTree root) {
+        //利用栈
+        if (root == null) {
+            return;
+        }
+        Stack<NodeTree> stack = new Stack<>();
+        NodeTree cur = root;
+        while (cur != null || !stack.empty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;//左
+            }
+            NodeTree top = stack.pop();
+            System.out.println(top.val);
+            cur = top.right;//右
+        }
+    }
+
+    // 后序遍历
+    void postOrderTraversalNor(NodeTree root) {
+        if (root == null) {
+            return;
+        }
+        Stack<NodeTree> stack = new Stack<>();
+        NodeTree cur = root;
+        NodeTree prev = null;
+        while (cur != null || !stack.empty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.peek();
+            if (cur.right == null || cur.right == prev) {
+                System.out.println(cur.val);
+                stack.pop();
+                prev = cur;
+                cur = null;
+            } else {
+                cur = cur.right;
+            }
+        }
+    }
+
+
+    //
+
+    public NodeTree buildTree(String str) {
+        NodeTree root = null;
+        int i = 0;
+        if (str.charAt(i) == '#') {
+            root = new NodeTree(str.charAt(i));
+            i++;
+            root.left = buildTree(str);
+            root.right = buildTree(str);
+        } else {
+            i++;
+        }
+        return root;
+    }
+
+
+    public NodeTree lowestCommonAncestor(NodeTree root, NodeTree p, NodeTree q) {
+        if (root == null) {
+            return null;
+        }
+        if (root == p || root == q) {
+            return root;
+        }
+        NodeTree left = lowestCommonAncestor(root.left, p, q);
+        NodeTree right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) {
+            //左右都找到了
+            return root;
+        } else if (left != null) {
+            return left;
+        } else {
+            return right;
+        }
+    }
 }
