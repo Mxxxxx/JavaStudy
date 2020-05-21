@@ -86,9 +86,9 @@ public class MyTree {
         if (root == null) {
             return size;
         }
+        size++;
         getSize1(root.left);
         getSize1(root.right);
-        size++;
         return size;
     }
 
@@ -107,7 +107,7 @@ public class MyTree {
         if (root == null) {
             return;
         }
-        if (root.right == null && root.left == null) {
+        if (root.right == null && root.left == null) {//判断是否是叶子节点
             leafSize++;
         }
         getSize1(root.right);
@@ -435,4 +435,41 @@ public class MyTree {
             return right;
         }
     }
+
+    //输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+    //要排好序，则中序遍历
+    public NodeTree prev = null;//
+
+    public void ConvertChild(NodeTree pRootOfTree) {
+        if (pRootOfTree == null) {
+            return;
+        }
+        ConvertChild(pRootOfTree.left);
+        //System.out.println(pRootOfTree.val);
+
+        //左树
+        pRootOfTree.left = prev;//头一个指向空
+        if (prev != null) {
+            prev.right = pRootOfTree;
+        }
+        prev = pRootOfTree;// prev指向了下一个节点  双向链表
+
+        ConvertChild(pRootOfTree.right);
+    }
+
+    public NodeTree Convert(NodeTree pRootOfTree) {
+        //在中序遍历的过程中，修改二叉树的结构
+        if (pRootOfTree == null) {
+            return null;
+        }
+        ConvertChild(pRootOfTree);
+        NodeTree head = null;
+        while (pRootOfTree.left != null) {
+            head = pRootOfTree.left;
+        }
+        return head;
+    }
+
+
+
 }
