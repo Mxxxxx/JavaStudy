@@ -26,8 +26,10 @@ public class TestHeap {
         int parent = root;
         int child = parent * 2 + 1;
         while (child < len) {//肯定有左孩子
+
             //判断是否有右孩子
             if (child + 1 < len) {
+
                 //找到左右孩子的最大值，用child保存最大
                 if (this.elem[child] < this.elem[child + 1]) {
                     child++;

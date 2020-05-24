@@ -82,39 +82,52 @@ public class TestDemo01 {
         }
     }
 
+
     //堆排序
-//    public static void justDown(int[] array, int root, int len) {
-//        int parent = root;
-//        int child = parent * 2 + 1;
-//        while (child < len) {
-//            if (child + 1 < len && array[child] < array[child + 1]) {
-//                child++;
-//            }
-//            if (array[child] > array[parent]) {
-//                int tmp = array[child];
-//                array[child] = array[parent];
-//                array[parent] = tmp;
-//                parent = child;
-//                child = parent * 2 + 1;
-//            }
-//        }
-//    }
-//
-//    public static void creatHeap(int[] array) {
-//        for (int i = 0; i < array.length - 1; i++) {
-//            justDown(array,);
-//        }
-//    }
-//
-//    public static void heapSort() {
-//
-//    }
-//
-//    public static void main(String[] args) {
-//        int[] array = {10, 5, 8, 4, 1, 9};
-//        selectSort(array);
-//        System.out.println(Arrays.toString(array));
-//    }
+    public static void justDown(int[] array, int root, int len) {
+        int parent = root;
+        int child = parent * 2 + 1;
+        while (child < len) {//有左孩子进入
+
+            if (child + 1 < len && array[child] < array[child + 1]) {//有右孩子，且找出其左右孩子节点最大值
+                child++;
+            }
+            if (array[child] > array[parent]) { //将最大值给头节点
+                int tmp = array[child];
+                array[child] = array[parent];
+                array[parent] = tmp;
+                parent = child;//向上移动
+                child = parent * 2 + 1;
+            } else {
+                break;
+            }
+        }
+    }
+
+    public static void creatHeap(int[] array) {//大根堆建立
+        for (int i = (array.length - 1 - 1) / 2; i >= 0; i--) {//拿根节点
+            justDown(array, i, array.length);
+        }
+    }
+
+    public static void heapSort(int[] array) {
+        creatHeap(array);
+        int end = array.length - 1;//最后一个开始
+        while (end > 0) {
+            int tmp = array[0];
+            array[0] = array[end];
+            array[end] = tmp;
+            justDown(array, 0, end);
+            end--;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] array = {10, 5, 8, 4, 1, 9};
+        heapSort(array);
+        System.out.println(Arrays.toString(array));
+    }
+
 
     //冒泡排序
     //时间复杂度   O(n^2)
@@ -137,7 +150,7 @@ public class TestDemo01 {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main4(String[] args) {
         int[] array = {10, 5, 8, 4, 1, 9};
         bubbleSort(array);
         System.out.println(Arrays.toString(array));
