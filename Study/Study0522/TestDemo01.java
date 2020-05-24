@@ -2,6 +2,7 @@ package JavaStudy.Study.Study0522;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Stack;
 
 /**
  * @program: Java
@@ -122,7 +123,7 @@ public class TestDemo01 {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main5(String[] args) {
         int[] array = {10, 5, 8, 4, 1, 9};
         heapSort(array);
         System.out.println(Arrays.toString(array));
@@ -181,4 +182,177 @@ public class TestDemo01 {
         insertSort(array);
         System.out.println(Arrays.toString(array));
     }
+
+
+    //快速排序
+    //快排要块，如果每次划分序列都可以均匀的划分，那么效率最好
+    //时间复杂度： nlong(n)                  最坏情况  1 2 3 4 5/ 5 4 3 2 1  O(n^2)
+    //空间复杂度：
+    //稳定性：不稳定
+    //找基准
+    public static int parition(int[] array, int low, int high) {
+        int tmp = array[low];//每次第一个为基准
+        while (low < high) {
+            while (low < high && array[high] >= tmp) {//条件low<high,预防都比tmp小或者大
+                high--;
+            }//跳出比基准小的
+            array[low] = array[high];//右边小的放左边
+
+            while (low < high && array[low] <= tmp) {
+                low++;
+            }//跳出比基准大的
+            array[high] = array[low];//左边大的放右边
+        }//跳出时说明已经相遇了，即基准位置找到，即左边都比基准小，右边都比基准大。
+        array[low] = tmp;//或者 high = tmp都可以，因为已经相遇，将基准的值tmp给相遇的位置。
+        return low;//返回基准的下标
+    }
+
+    public static void insert_Sort(int[] array, int start, int end) {
+        int tmp = 0;
+        for (int i = start + 1; i < end; i++) {//从第二个开始
+            tmp = array[i];
+            int j = i - 1;//前一个
+            while (j >= 0) {
+                if (array[j] > tmp) {//前一个大于后一个 的话  稳定  ；要是>=tmp 则不稳定
+                    array[j + 1] = array[j];//将前一个的值赋值给后一个
+                } else {
+                    break;
+                }
+                j--;
+            }
+            array[j + 1] = tmp;//放入较大的那个值
+        }
+    }
+
+    //三数取中
+    public static void three_num_mid(int[] array, int left, int right) {
+        //效果：array[mid] <= array[left] <= array[right]
+        int mid = (left + right) / 2;
+        if (array[mid] > array[left]) {
+            int tmp = array[mid];
+            array[mid] = array[left];
+            array[left] = tmp;
+        }
+        if (array[left] > array[right]) {
+            int tmp = array[right];
+            array[right] = array[left];
+            array[left] = tmp;
+        }
+        if (array[mid] > array[right]) {
+            int tmp = array[mid];
+            array[mid] = array[right];
+            array[right] = tmp;
+        }
+    }
+
+    public static void quick(int[] array, int left, int right) {
+        if (left >= right) {
+            return;//递归终止条件
+        }
+        //优化：当待排序序列数据个数<=100时，用直接插入排序
+        if (right - left + 1 <= 100) {
+            insert_Sort(array, left, right);
+            return;
+        }
+        three_num_mid(array, left, right);
+        int par = parition(array, left, right);//基准
+        quick(array, left, par - 1);//基准左边部分递归
+        quick(array, par + 1, right);//基准右边部分递归
+    }
+
+    public static void quickSort(int[] array) {
+        quick(array, 0, array.length);
+    }
+
+    //非递归实现
+    public static void quickSortl(int[] array) {
+        Stack<Integer> stack = new Stack<>();
+        int left = 0;
+        int right = array.length - 1;
+        int par = parition(array, left, right);//基准
+        if (par > left + 1) {//左边有两个元素以上
+            stack.push(left);
+            stack.push(par - 1);
+        }
+        if (par < right - 1) {//右边
+            stack.push(par + 1);
+            stack.push(right);
+        }
+        while (!stack.empty()) {
+            right = stack.pop();
+            left = stack.pop();
+            par = parition(array, left, right);
+            if (par > left + 1) {//左边有两个元素以上
+                stack.push(left);
+                stack.push(par - 1);
+            }
+            if (par < right - 1) {//右边
+                stack.push(par + 1);
+                stack.push(right);
+            }
+
+        }
+    }
+
+    //归并排序
+    //时间复杂度 O( nlog(n) )
+    //空间复杂度 O(n)
+    //稳定性：稳定
+    //分解成一个个有序序列
+    public static void merge(int[] array, int low, int mid, int high) {
+        //归并
+        int len = high - low + 1;
+        int[] ret = new int[len];
+        int s1 = low;
+        int i = 0;//用来表示ret数组下标
+        int s2 = mid + 1;
+        while (s1 <= mid && s1 <= high) {//两段都有数据
+            if (array[s1] <= array[s2]) {
+                ret[i++] = array[s1++];
+            } else {
+                ret[i++] = array[s2++];
+            }
+        }
+
+        while (s1 <= mid) {//第一个段有
+            ret[i++] = array[s1++];
+        }
+        while ((s2 <= high)) {
+            ret[i++] = array[s2++];
+        }
+        for (int i1 = 0; i1 < ret.length; i1++) {
+            array[i1 + low] = ret[i1];
+        }
+    }
+
+    public static void mergeSortInternal(int[] array, int low, int high) {
+        if (low >= high) {
+            return;
+        }
+        int mid = (low + high) >>> 1;
+        mergeSortInternal(array, low, mid);
+        mergeSortInternal(array, mid + 1, high);//全部分解成一个个元素
+
+        merge(array, low, mid, high);//归并方法
+    }
+
+    public static void mergeSort(int[] array) {
+        mergeSortInternal(array, 0, array.length - 1);
+    }
+
+    public static void main(String[] args) {
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
