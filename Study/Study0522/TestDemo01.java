@@ -96,7 +96,7 @@ public class TestDemo01 {
                 int tmp = array[child];
                 array[child] = array[parent];
                 array[parent] = tmp;
-                parent = child;//向上移动
+                parent = child;//向下移动
                 child = parent * 2 + 1;
             } else {
                 break;
@@ -104,7 +104,7 @@ public class TestDemo01 {
         }
     }
 
-    public static void creatHeap(int[] array) {//大根堆建立
+    public static void creatHeap(int[] array) {//堆建立
         for (int i = (array.length - 1 - 1) / 2; i >= 0; i--) {//拿根节点
             justDown(array, i, array.length);
         }
