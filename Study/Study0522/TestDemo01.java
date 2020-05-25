@@ -47,10 +47,10 @@ public class TestDemo01 {
         int tmp = 0;
         for (int i = drr; i < array.length; i++) {//从第 drr 个开始
             tmp = array[i];
-            int j = i - drr;//分组的第一个位置
+            int j = i - drr;//分组的第一个位置0
             while (j >= 0) {
-                if (array[j] > tmp) {//前一个大于后一个 的话  稳定  ；要是>=tmp 则不稳定
-                    array[j + drr] = array[j];//将前一个的值赋值给后一个
+                if (array[j] > tmp) {//第j个大于第i个的话           稳定  ；要是>=tmp 则不稳定
+                    array[j + drr] = array[j];//将前一个的值赋值给后一个   5=0
                 } else {
                     break;
                 }
@@ -301,12 +301,12 @@ public class TestDemo01 {
     //分解成一个个有序序列
     public static void merge(int[] array, int low, int mid, int high) {
         //归并
-        int len = high - low + 1;
+        int len = high - low + 1;//下标从0开始
         int[] ret = new int[len];
-        int s1 = low;
+        int s1 = low;//左半部分的第一个
         int i = 0;//用来表示ret数组下标
-        int s2 = mid + 1;
-        while (s1 <= mid && s1 <= high) {//两段都有数据
+        int s2 = mid + 1;//右半部分的第一个
+        while (s1 <= mid && s2 <= high) {//两段都有数据
             if (array[s1] <= array[s2]) {
                 ret[i++] = array[s1++];
             } else {
@@ -326,13 +326,14 @@ public class TestDemo01 {
     }
 
     public static void mergeSortInternal(int[] array, int low, int high) {
+        //1.分解
         if (low >= high) {
             return;
         }
-        int mid = (low + high) >>> 1;
+        int mid = (low + high) / 2;
         mergeSortInternal(array, low, mid);
         mergeSortInternal(array, mid + 1, high);//全部分解成一个个元素
-
+        //2.合并
         merge(array, low, mid, high);//归并方法
     }
 
