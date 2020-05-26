@@ -341,6 +341,53 @@ public class TestDemo01 {
         mergeSortInternal(array, 0, array.length - 1);
     }
 
+    //非递归归并
+    public static void mergeSortI(int[] array) {
+        for (int gap = 1; gap < array.length; gap = gap * 2) {//分组最后长度不能大于数组长度
+            mergeNor(array, gap);
+        }
+    }
+
+    public static void mergeNor(int[] array, int gap) {
+        int s1 = 0;//第一个归并段的开始
+        int e1 = s1 + gap - 1;//第一个结束
+        int s2 = e1 + 1;//第二个开始
+        int e2 = s2 + gap - 1 < array.length ? s2 + gap - 1 : array.length - 1;//第二个结束
+        int[] ret = new int[array.length];
+        int k = 0;//ret的下标
+        while (s2 < array.length) {//1.肯定有两个归并
+            //2.对应的s1和s2比较
+            while (s1 <= e1 && s2 <= e2) {
+                if (array[s1] < array[s2]) {
+                    ret[k++] = array[s1++];
+                } else {
+                    ret[k++] = array[s2];
+                }
+            }
+            //3.第二步在比较过程中会有一个下标先走完
+            // 4.判断谁没走完，将没走完的剩下数据拷贝到结果数组中
+            while (s1 <= e1) {
+                ret[k++] = array[s1++];
+            }
+            while (s2 <= e2) {
+                ret[k++] = array[s2++];
+            }
+            //5.确定新的s1,e1,s2,e2
+            s1 = e2 + 1;
+            e1 = s1 + gap - 1;//第一个结束
+            s2 = e1 + 1;//第二个开始
+            e2 = s2 + gap - 1 < array.length ? s2 + gap - 1 : array.length - 1;//第二个结束
+        }
+        //6.判断是否由另外的归并段
+        while (s1 <= array.length - 1) {//剩下一个
+            ret[k++] = array[s1++];
+        }
+
+        for (int i = 0; i < ret.length; i++) {
+            array[i] = ret[i];
+        }
+    }
+
     public static void main(String[] args) {
 
     }
