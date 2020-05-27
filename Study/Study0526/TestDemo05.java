@@ -16,6 +16,19 @@ package JavaStudy.Study.Study0526;
 class OuterClass {
     public int data1 = 1;
     public static int data2 = 2;
+    public OuterClass out;
+
+
+    //静态内部类
+    //静态内部类当中不能访问【外部类的非静态数据成员】
+    static class InnerClass1 {
+        public int data3 = 3;
+        public OuterClass out;
+
+        public InnerClass1(OuterClass out) {
+            this.out = out;
+        }
+    }
 
     //实例内部类: 可以看作是一个普通的实例数据成员
     class InnerClass {
@@ -40,5 +53,8 @@ public class TestDemo05 {
         OuterClass outerClass = new OuterClass();
         OuterClass.InnerClass innerClass = outerClass.new InnerClass();
         innerClass.func();
+        //静态
+        OuterClass.InnerClass1 innerClass1 = new OuterClass.InnerClass1(outerClass);
+
     }
 }

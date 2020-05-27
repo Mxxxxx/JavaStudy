@@ -13,4 +13,12 @@ public class AgeComparator implements Comparator<Person> {
     public int compare(Person o1, Person o2) {
         return o2.age - o1.age;
     }
+
 }
+
+//public class AgeComparator implements Comparable<Person> {
+//    @Override
+//    public int compareTo(Person o) {
+//        return 0;
+//    }
+//}
