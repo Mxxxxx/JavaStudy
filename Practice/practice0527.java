@@ -44,23 +44,23 @@ public class practice0527 {
     //来源：力扣（LeetCode）
     //链接：https://leetcode-cn.com/problems/find-k-closest-elements
     //著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-    public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        if (arr.length == 0 || arr == null) {
-            return null;
-        }
-        int[] tmp = new int[k];
-        List<Integer> list1 = new ArrayList<>();
-        Map<Integer, Integer> map = new HashMap<>();//k v
-        for (int i = 0; i < k; i++) {
-            int key = arr[i] - x;
-            int val = arr[i];
-            map.put(key, val);
-        }
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            list1.add(entry.getValue());
-        }
-
-        return list;
-    }
+//    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+//        if (arr.length == 0 || arr == null) {
+//            return null;
+//        }
+//        int[] tmp = new int[k];
+//        List<Integer> list1 = new ArrayList<>();
+//        Map<Integer, Integer> map = new HashMap<>();//k v
+//        for (int i = 0; i < k; i++) {
+//            int key = arr[i] - x;
+//            int val = arr[i];
+//            map.put(key, val);
+//        }
+//        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+//            list1.add(entry.getValue());
+//        }
+//
+//        return list;
+//    }
 
 }
