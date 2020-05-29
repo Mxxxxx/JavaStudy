@@ -5,8 +5,9 @@ package JavaStudy.Study.Study0526;
  * @description:
  * @author: Mx
  * 自定义类型为什么要实现可以比较呢？
- *
- *  @create: 2020-05-26 09:24
+ * 1.接口Comparable，重写
+ * 2.定义新类 比较器接口Comparator
+ * @create: 2020-05-26 09:24
  **/
 class Student implements Comparable<Student> {
     public String name;
