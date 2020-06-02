@@ -1,5 +1,7 @@
 package JavaStudy.Practice;
 
+import JavaStudy.Study.MyArrayList;
+
 import java.util.*;
 
 /**
@@ -44,23 +46,89 @@ public class practice0527 {
     //来源：力扣（LeetCode）
     //链接：https://leetcode-cn.com/problems/find-k-closest-elements
     //著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-//    public List<Integer> findClosestElements(int[] arr, int k, int x) {
-//        if (arr.length == 0 || arr == null) {
-//            return null;
-//        }
-//        int[] tmp = new int[k];
-//        List<Integer> list1 = new ArrayList<>();
-//        Map<Integer, Integer> map = new HashMap<>();//k v
-//        for (int i = 0; i < k; i++) {
-//            int key = arr[i] - x;
-//            int val = arr[i];
-//            map.put(key, val);
-//        }
-//        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-//            list1.add(entry.getValue());
-//        }
-//
-//        return list;
-//    }
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        if (arr.length == 0 || arr == null) {
+            return null;
+        }
+        List<Integer> list1 = new LinkedList<>();
+        HashSet<Integer> set = new HashSet<>();
+        Map<Integer, Integer> map = new HashMap<>();//k v
+        for (int i = 0; i < arr.length; i++) {
+            int key = arr[i] - x;
+            int val = arr[i];
+            map.put(key, val);
+        }
+        int i = 0;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            i++;
+            set.add(entry.getValue());
+            if (i == k) {
+                break;
+            }
+        }
+        set.toArray();
+        return list1;
+    }
 
+    //给一非空的单词列表，返回前 k 个出现次数最多的单词。
+    //
+    //返回的答案应该按单词出现频率由高到低排序。如果不同的单词有相同出现频率，按字母顺序排序。
+    class Solution {
+        public List<String> topKFrequent(String[] words, int k) {
+            LinkedList<String> res = new LinkedList<>();
+            //单词和次数对应
+            Map<String, Integer> map = new HashMap<>();
+            //先将数组当中的每个单词存放至map当中
+            for (String s : words) {
+                if (map.get(s) == null) {
+                    map.put(s, 1);
+                } else {
+                    map.put(s, map.get(s) + 1);
+                }
+            }
+
+            PriorityQueue<Map.Entry<String, Integer>> minHeap = new PriorityQueue<>(k, new Comparator<Map.Entry<String, Integer>>() {
+                //这个方法的作用是：放入元素之后，进行调整的。
+                public int compare(Map.Entry<String, Integer> x, Map.Entry<String, Integer> y) {
+                    //频率相同：如果是小堆的形式是：i  love   出的时间就是love i 了
+                    if (x.getValue() == y.getValue()) {
+
+                        return y.getKey().compareTo(x.getKey());
+                        //return x.getKey().compareTo(y.getKey());
+                    }
+                    return x.getValue() - y.getValue();
+                }
+            });
+
+
+            //每次添加的时候  触发上面的排序
+            for (Map.Entry<String, Integer> i : map.entrySet()) {
+                if (minHeap.size() < k) { // 未达到最大容量，直接添加
+                    minHeap.add(i);
+                } else { // 队列已满
+                    Map.Entry<String, Integer> top = minHeap.peek();
+                    if (top.getValue() == i.getValue()) {
+                        //相等之后，字母顺序小的入队
+                        if (top.getKey().compareTo(i.getKey()) > 0) {
+                            minHeap.poll();
+                            minHeap.add(i);
+                        }
+                    } else {
+                        if (top.getValue() < i.getValue()) {
+                            minHeap.poll();
+                            minHeap.add(i);
+                        }
+                    }
+                }
+            }
+            System.out.println(minHeap);//可以看到结果和我们想要的是反着的。
+
+            for (int i = 0; i < k; ++i) {
+                String temp = minHeap.peek().getKey();
+                res.add(0, temp);
+                minHeap.poll();
+            }
+            return res;
+        }
+    }
 }
