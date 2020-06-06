@@ -1,6 +1,8 @@
 package JavaStudy.Practice;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -36,7 +38,7 @@ public class practice0603 {
         return l == 0;
     }
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String string = scanner.nextLine();
         String ressult = "";
@@ -63,5 +65,48 @@ public class practice0603 {
 
         }
         System.out.println(ressult);
+    }
+
+    public static void main2(String[] args) {
+        Scanner in = new Scanner(System.in);
+        HashSet<String> hashSet = new HashSet<>();
+        while (in.hasNext()) {
+            hashSet.add(in.next());
+        }
+        int num = hashSet.size();
+        System.out.println(hashSet.size());
+    }
+
+    public static int fib(int num) {
+        if (num == 0) {
+            return 0;
+        }
+        if (num == 1) {
+            return 1;
+        } else return fib(num - 1) + fib(num - 2);
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = 0;
+        int left = 0;
+        int right = 0;
+        while (in.hasNextInt()) {
+            int num = in.nextInt();
+            while (true) {
+                if (fib(n) < num) {
+                    left = num - fib(n);
+                } else {
+                    right = fib(n) - num;
+                    break;
+                }
+                n++;
+            }
+            if (left < right) {
+                System.out.println(left);
+            } else {
+                System.out.println(right);
+            }
+        }
     }
 }
