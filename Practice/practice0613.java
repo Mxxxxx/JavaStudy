@@ -1,5 +1,6 @@
 package JavaStudy.Practice;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -31,6 +32,13 @@ public class practice0613 {
         Scanner in = new Scanner(System.in);
         String num = in.nextLine();
         func(num);
+    }
+
+    public static int[] exchangeAB(int[] AB) {
+        AB[0] = AB[0] ^ AB[1];
+        AB[1] = AB[0] ^ AB[1];
+        AB[0] = AB[0] ^ AB[1];
+        return AB;
     }
 }
 
