@@ -18,16 +18,30 @@ class AboutThreadStop {
             Thread t = Thread.currentThread();
             while (true) {
                 try {
-                    System.out.println("我正在挖煤");
-                    Thread.sleep(1000);
-                    //boolean interrupted = Thread.interrupted();
-                    boolean interrupted = t.isInterrupted();
+                    System.out.println("我正在挖煤");//此时停止，正常退出
+                    Thread.sleep(1000);//在此时停止，执行异常退出
+                    boolean interrupted = Thread.interrupted();//是否有人让你停止
+                    //boolean interrupted = t.isInterrupted();
+                    /*
+                   1. Thread.interrupted();
+                    返回当前线程的 isInterrupted();
+                    isInterrupted=false
+
+                    给线程自己用
+                    如果调用了Thread.interrupted(); ，代表线程以及知道了，所以可以把中断标志清理成 false
+                   2. t.isInterrupted();
+                   return isInterrupted()
+
+                   非该线程本身的线程，看是否有人让本线程停止，
+                   只能看，不能修改
+                     */
                     System.out.println("是否有人让我停止运行: " + interrupted);
                     if (interrupted == true) {
                         break;
                     }
-                } catch (InterruptedException e) {
-                    System.out.println("有人让我停止运行，但因为我正在 sleep，所以我收到了这个异常");
+                } catch (InterruptedException e) {//正在sleep时，接收停止消息，以异常形式停止
+                    System.out.println("有人让我停止运行，但因为我正在 sleep，所以我收到了这个异常，异常退出");
+                    break;
                 }
             }
         }

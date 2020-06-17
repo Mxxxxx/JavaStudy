@@ -21,7 +21,7 @@ public class AboutThreadStop2 {
             while (true) {
                 try {
                     System.out.println("挖煤");
-                    Thread.sleep(59000);
+                    Thread.sleep(59000);//休眠期间，接收停止通知，但需要休眠时间结束后才能停止，消息通知不及时
                     System.out.println("是否有人让我停止: " + isInterrupted);
                 } catch (InterruptedException e) {
                 }
