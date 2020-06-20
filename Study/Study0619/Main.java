@@ -8,5 +8,6 @@ public class Main {
 
         // 如果要用到该类的对象
         SingletonStarve right = SingletonStarve.getInstance();
+        SingletonLazyTwice r = SingletonLazyTwice.getInstance();
     }
 }

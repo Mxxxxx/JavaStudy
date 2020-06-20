@@ -21,11 +21,27 @@ public class WaitNotifyDemo {
         }
     }
 
+    static class SubTread1 extends Thread {
+        @Override
+        public void run() {
+            try {
+                System.out.println("另一个等待");
+                synchronized (o) {
+                    o.wait();
+                    System.out.println("结束");
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     // 通过 scanner 等用户输入，用户输入任意字符，就唤醒子线程
     public static void main(String[] args) {
         SubThread thread = new SubThread();
         thread.start();
-
+        SubTread1 subTread1 = new SubTread1();
+        subTread1.start();
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();     // 至少一段时间之后
         synchronized (o) {
