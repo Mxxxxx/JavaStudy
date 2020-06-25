@@ -19,13 +19,13 @@ public class JavaThreadPoolMain {
                 10,//总线程数量
                 0,//临时线线程时间
                 TimeUnit.SECONDS,//临时线程允许摸鱼时间单位
-                queue,
+                queue,//线程队列
                 new MyThreadFactory(),
-                new ThreadPoolExecutor.CallerRunsPolicy()
+                new ThreadPoolExecutor.AbortPolicy()
         );
 
         for (int i = 0; true; i++) {
-            // 创建让线程池执行的任务
+            // 线程池执行的任务
             Runnable target = new Runnable() {
                 @Override
                 public void run() {
