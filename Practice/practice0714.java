@@ -25,6 +25,6 @@ public class practice0714 {
     public static void main(String[] args) {
         String a = "a b c";
         System.out.println(replaceSpace(a, a.length()));
-        
+
     }
 }
