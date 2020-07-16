@@ -34,6 +34,8 @@ public class practice0716 {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String a = in.nextLine();
+        char[] chars = {'a', 'b'};
+        new String( "utf-8");
         func(a);
     }
 }
