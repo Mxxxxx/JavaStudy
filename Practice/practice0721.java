@@ -102,6 +102,10 @@ public class practice0721 {
         }
     }
 
+    public static void main5(String[] args) {
+        System.out.println(1);
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         while (in.hasNext()) {
