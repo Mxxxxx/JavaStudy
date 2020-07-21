@@ -7,9 +7,7 @@ import java.util.Scanner;
  * @Date 2020/7/22 7:28
  */
 public class practice0722 {
-    public static void main1(String[] args) {
 
-    }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         while (in.hasNext()) {
